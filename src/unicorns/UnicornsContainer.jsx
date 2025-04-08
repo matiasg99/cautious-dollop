@@ -15,6 +15,20 @@ const UnicornsContainer = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const [formData, setFormData] = useState({
+        name: '',
+        color: '',
+        age: 0,
+        power: ''
+    })
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }))
+    }
     // Fetch unicorns
     const fetchUnicorns = async () => {
         setLoading(true);
@@ -72,10 +86,12 @@ const UnicornsContainer = () => {
     return (
         <UnicornsView
             unicorns={unicorns}
+            formData={formData}
             loading={loading}
             error={error}
             onCreateUnicorn={createUnicorn}
             onDeleteUnicorn={deleteUnicorn}
+            onInputChange={handleInputChange}
         />
     );
 };

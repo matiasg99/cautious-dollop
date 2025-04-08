@@ -4,10 +4,12 @@ import { Column } from 'primereact/column';
 
 const UnicornsView = ({
     unicorns,
+    formData,
     loading,
     error,
     onCreateUnicorn,
-    onDeleteUnicorn
+    onDeleteUnicorn,
+    onInputChange
 }) => {
     return (
         <div className="container">
@@ -20,24 +22,32 @@ const UnicornsView = ({
                     name="name"
                     placeholder="Nombre del unicornio"
                     required
+                    value={formData.name}
+                    onChange={onInputChange}
                 />
                 <input
                     type="text"
                     name="color"
                     placeholder="Color"
                     required
+                    value={formData.color}
+                    onChange={onInputChange}
                 />
                 <input
                     type="number"
                     name="age"
                     placeholder="Edad"
                     required
+                    value={formData.age}
+                    onChange={onInputChange}
                 />
                 <input
                     type="text"
                     name="power"
                     placeholder="Poder"
                     required
+                    value={formData.power}
+                    onChange={onInputChange}
                 />
                 <button type="submit">
                     Agregar Unicornio

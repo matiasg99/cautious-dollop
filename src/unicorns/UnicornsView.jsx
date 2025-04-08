@@ -9,7 +9,8 @@ const UnicornsView = ({
     error,
     onCreateUnicorn,
     onDeleteUnicorn,
-    onInputChange
+    onInputChange,
+    onEdit
 }) => {
     return (
         <div className="container">
@@ -60,6 +61,16 @@ const UnicornsView = ({
                     <Column field="color" header="Color"></Column>
                     <Column field="age" header="Edad"></Column>
                     <Column field="power" header="Poder"></Column>
+                    <Column body={(rowData) => (
+                        <div>
+                            <button onClick={() => onEdit(rowData)} className="p-button-warning">
+                                Editar
+                            </button>
+                            <button onClick={() => onDeleteUnicorn(rowData._id)} className="p-button-danger">
+                                Eliminar
+                            </button>
+                        </div>
+                    )} header="Acciones"></Column>
                 </DataTable>
             </div>
             </div>

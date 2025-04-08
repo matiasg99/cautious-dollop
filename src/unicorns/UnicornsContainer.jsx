@@ -49,31 +49,32 @@ const UnicornsContainer = () => {
         }
     };
 
-    // Create unicorn
-    const createUnicorn = async (e) => {
-
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Aquí iría la llamada POST a tu API
-            console.log(formData);
-            const response = await fetch('https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-            const newUnicorn = await response.json();
-            setUnicorns([...unicorns, newUnicorn]);
+            if (editingUnicorn) {
+                console.log('editaa');
+            } else {
+                console.log('creaaa');
+                console.log(formData);
+                // const response = await fetch('https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify(formData),
+                // });
+                // const newUnicorn = await response.json();
+                // setUnicorns([...unicorns, newUnicorn]);
+            }
+
         } catch (err) {
             setError('Error al crear el unicornio');
         }
     };
 
-    // Delete unicorn
     const deleteUnicorn = async (id) => {
         try {
-            // Aquí iría la llamada DELETE a tu API
             await fetch(`/api/unicorns/${id}`, {
                 method: 'DELETE',
             });
@@ -83,6 +84,39 @@ const UnicornsContainer = () => {
         }
     };
 
+    const [editingUnicorn, setEditingUnicorn] = useState(null)
+
+    const handleEdit = (unicorn) => {
+        setEditingUnicorn(unicorn)
+        setFormData({
+            name: unicorn.name,
+            color: unicorn.color,
+            age: unicorn.age,
+            power: unicorn.power
+        })
+    }
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault()
+    //     if (editingProduct) {
+    //       setProducts(products.map(product => 
+    //         product.id === editingProduct.id 
+    //           ? { ...product, ...formData, precio: Number(formData.precio), stock: Number(formData.stock) }
+    //           : product
+    //       ))
+    //       setEditingProduct(null)
+    //     } else {
+    //       const newProduct = {
+    //         id: Date.now(),
+    //         nombre: formData.nombre,
+    //         precio: Number(formData.precio),
+    //         stock: Number(formData.stock)
+    //       }
+    //       setProducts([...products, newProduct])
+    //     }
+    //     setFormData({ nombre: '', precio: '', stock: '' })
+    //   }
+
     useEffect(() => {
         fetchUnicorns();
     }, []);
@@ -91,9 +125,11 @@ const UnicornsContainer = () => {
         <UnicornsView
             unicorns={unicorns}
             formData={formData}
+            editingUnicorn={editingUnicorn}
             loading={loading}
             error={error}
-            onCreateUnicorn={createUnicorn}
+            onSubmit={handleSubmit}
+            onEdit={handleEdit}
             onDeleteUnicorn={deleteUnicorn}
             onInputChange={handleInputChange}
         />

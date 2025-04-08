@@ -1,70 +1,176 @@
 import { useState } from 'react';
 
-const UnicornsView = ({ 
-    unicorns, 
-    loading, 
-    error, 
-    onCreateUnicorn, 
-    onDeleteUnicorn 
+const UnicornsView = ({
+    unicorns,
+    loading,
+    error,
+    onCreateUnicorn,
+    onDeleteUnicorn
 }) => {
     const [newUnicornName, setNewUnicornName] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (newUnicornName.trim()) {
-            onCreateUnicorn({ name: newUnicornName });
-            setNewUnicornName('');
+    const [formData, setFormData] = useState({
+        name: '',
+        color: '',
+        age: 0,
+        power: ''
+    })
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
+        setFormData(prev => ({
+          ...prev,
+          [name]: value
+        }))
+      }
+
+    const [editingProduct, setEditingProduct] = useState(null)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        if (editingProduct) {
+            console.log('editalo', editingProduct)
+            try {
+                const response = await fetch(`https://api.restful-api.dev/objects/${editingProduct.id}`, {
+                    method: 'PUT',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                    name: formData.name,
+                    data: {
+                        features: formData.features,
+                        price: Number(formData.price),
+                        year: Number(formData.year)
+                    }
+                    })
+                })
+
+                const updatedProduct = await response.json()
+                console.log('Objeto actualizado:', updatedProduct)
+                setProducts(products.map(product => product.id === editingProduct.id ? updatedProduct : product))
+                setEditingProduct(null)
+                setFormData({ name: '', features: '', price: 0, year: 0 })
+
+            } catch (error) {
+            console.error('Error:', error)
+            alert('Hubo un error al actualizar el objeto. Por favor, intente nuevamente.')
+            }
+        } else {
+            console.log('crealo')
+            try {
+            const response = await fetch('https://api.restful-api.dev/objects', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                name: formData.name,
+                data: {
+                    features: formData.features,
+                    price: Number(formData.price),
+                    year: Number(formData.year)
+                }
+                })
+            })
+
+            if (!response.ok) {
+                throw new Error('Error al crear el objeto')
+            }
+
+            const newProduct = await response.json()
+            console.log('Objeto creado:', newProduct)
+
+            const updatedProducts = [...products, newProduct]
+            setProducts(updatedProducts)
+            localStorage.setItem('products', JSON.stringify(updatedProducts))
+
+            setFormData({ name: '', features: '', price: 0, year: 0 })
+            } catch (error) {
+            console.error('Error:', error)
+            alert('Hubo un error al crear el objeto. Por favor, intente nuevamente.')
+            }
         }
-    };
+    }
 
     if (loading) return <div>Cargando unicornios...</div>;
     if (error) return <div className="error">{error}</div>;
 
     return (
-        <div className="unicorns-container">
-            <h2>Gestión de Unicornios</h2>
-            
-            {/* Formulario para crear unicornios */}
+        <div className="container">
+            <h1>Gestión de Inventario</h1>
+
+            <div className="unicorns-container">
             <form onSubmit={handleSubmit} className="unicorn-form">
                 <input
                     type="text"
-                    value={newUnicornName}
-                    onChange={(e) => setNewUnicornName(e.target.value)}
+                    name="name"
                     placeholder="Nombre del unicornio"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
                 />
-                <button type="submit">Crear Unicornio</button>
+                <input
+                    type="text"
+                    name="color"
+                    placeholder="Color"
+                    value={formData.colour}
+                    onChange={handleInputChange}
+                    required
+                />
+                <input
+                    type="number"
+                    name="age"
+                    placeholder="Edad"
+                    value={formData.age}
+                    onChange={handleInputChange}
+                    required
+                />
+                <input
+                    type="text"
+                    name="power"
+                    placeholder="Poder"
+                    value={formData.power}
+                    onChange={handleInputChange}
+                    required
+                />
+                <button type="submit">
+                {editingProduct ? 'Actualizar' : 'Agregar'} Producto
+                </button>
             </form>
 
-            {/* Tabla de unicornios */}
-            <table className="unicorns-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
+            <div className="products-list">
+                <h2>Lista de Productos</h2>
+                {unicorns.length > 0 ? (
+                <>
+                    <table>
+                    <thead>
+                        <tr>
                         <th>Nombre</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {unicorns.map(unicorn => (
+                        <th>Color</th>
+                        <th>Edad</th>
+                        <th>Poder</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {unicorns.map(unicorn => (
                         <tr key={unicorn.id}>
-                            <td>{unicorn.id}</td>
                             <td>{unicorn.name}</td>
+                            <td>{unicorn.colour}</td>
+                            <td>{unicorn.age}</td>
+                            <td>{unicorn.power}</td>
                             <td>
-                                <button 
-                                    onClick={() => onDeleteUnicorn(unicorn.id)}
-                                    className="delete-button"
-                                >
-                                    Eliminar
-                                </button>
                             </td>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {unicorns.length === 0 && (
-                <p>No hay unicornios disponibles.</p>
-            )}
+                        ))}
+                    </tbody>
+                    </table>
+                </>
+                ) : (
+                <p>No hay unicornios en el inventario</p>
+                )}
+            </div>
+            </div>
         </div>
     );
 };

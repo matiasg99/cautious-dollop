@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 import UnicornsView from './UnicornsView';
 
+// https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd
+
+// {
+//     name: "nombre unicornio",
+//     color: "color unicornio",
+//     age: 5,
+//     power: "especial"
+// }
+
 const UnicornsContainer = () => {
     const [unicorns, setUnicorns] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -10,9 +19,13 @@ const UnicornsContainer = () => {
     const fetchUnicorns = async () => {
         setLoading(true);
         try {
-            // Aquí iría la llamada a tu API
-            const response = await fetch('/api/unicorns');
+
+            const response = await fetch('https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns');
+            if (!response.ok) {
+                throw new Error('Error al obtener los datos de la API');
+            }
             const data = await response.json();
+
             setUnicorns(data);
         } catch (err) {
             setError('Error al cargar los unicornios');

@@ -57,7 +57,7 @@ const UnicornsView = ({
                 <h2>Lista de Productos</h2>
                 <DataTable value={unicorns} emptyMessage="No hay unicornios en el inventario">
                     <Column field="name" header="Nombre"></Column>
-                    <Column field="colour" header="Color"></Column>
+                    <Column field="color" header="Color"></Column>
                     <Column field="age" header="Edad"></Column>
                     <Column field="power" header="Poder"></Column>
                 </DataTable>

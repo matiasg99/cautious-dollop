@@ -57,15 +57,15 @@ const UnicornsContainer = () => {
             } else {
                 console.log('creaaa');
                 console.log(formData);
-                // const response = await fetch('https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify(formData),
-                // });
-                // const newUnicorn = await response.json();
-                // setUnicorns([...unicorns, newUnicorn]);
+                const response = await fetch('https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+                const newUnicorn = await response.json();
+                setUnicorns([...unicorns, newUnicorn]);
             }
 
         } catch (err) {

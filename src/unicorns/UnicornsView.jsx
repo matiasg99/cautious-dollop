@@ -7,7 +7,7 @@ const UnicornsView = ({
     formData,
     loading,
     error,
-    onCreateUnicorn,
+    onSubmit,
     onDeleteUnicorn,
     onInputChange,
     onEdit
@@ -17,7 +17,7 @@ const UnicornsView = ({
             <h1>Gestión de Unicornios</h1>
 
             <div className="unicorns-container">
-            <form onSubmit={onCreateUnicorn} className="unicorn-form">
+            <form onSubmit={onSubmit} className="unicorn-form">
                 <input
                     type="text"
                     name="name"

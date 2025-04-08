@@ -35,7 +35,7 @@ const UnicornsContainer = () => {
         setLoading(true);
         try {
 
-            const response = await fetch('https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns');
+            const response = await fetch('https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns');
             if (!response.ok) {
                 throw new Error('Error al obtener los datos de la API');
             }
@@ -75,10 +75,11 @@ const UnicornsContainer = () => {
 
     const deleteUnicorn = async (id) => {
         try {
-            await fetch(`/api/unicorns/${id}`, {
+            await fetch(`https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns/${id}`, {
                 method: 'DELETE',
             });
             setUnicorns(unicorns.filter(unicorn => unicorn.id !== id));
+            // fetchUnicorns();
         } catch (err) {
             setError('Error al eliminar el unicornio');
         }

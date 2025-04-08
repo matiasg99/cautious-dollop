@@ -9,44 +9,36 @@ const UnicornsView = ({
 }) => {
     return (
         <div className="container">
-            <h1>Gestión de Inventario</h1>
+            <h1>Gestión de Unicornios</h1>
 
             <div className="unicorns-container">
-            <form onSubmit={handleSubmit} className="unicorn-form">
+            <form onSubmit={onCreateUnicorn} className="unicorn-form">
                 <input
                     type="text"
                     name="name"
                     placeholder="Nombre del unicornio"
-                    value={formData.name}
-                    onChange={handleInputChange}
                     required
                 />
                 <input
                     type="text"
                     name="color"
                     placeholder="Color"
-                    value={formData.colour}
-                    onChange={handleInputChange}
                     required
                 />
                 <input
                     type="number"
                     name="age"
                     placeholder="Edad"
-                    value={formData.age}
-                    onChange={handleInputChange}
                     required
                 />
                 <input
                     type="text"
                     name="power"
                     placeholder="Poder"
-                    value={formData.power}
-                    onChange={handleInputChange}
                     required
                 />
                 <button type="submit">
-                {editingProduct ? 'Actualizar' : 'Agregar'} Producto
+                    Agregar Unicornio
                 </button>
             </form>
 

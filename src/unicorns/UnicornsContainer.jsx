@@ -57,7 +57,7 @@ const UnicornsContainer = () => {
             } else {
                 console.log('creaaa');
                 console.log(formData);
-                const response = await fetch('https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns', {
+                const response = await fetch('https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -75,11 +75,12 @@ const UnicornsContainer = () => {
 
     const deleteUnicorn = async (id) => {
         try {
-            await fetch(`https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd/unicorns/${id}`, {
+            await fetch(`https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns/${id}`, {
                 method: 'DELETE',
             });
             setUnicorns(unicorns.filter(unicorn => unicorn.id !== id));
-            // fetchUnicorns();
+
+            fetchUnicorns();
         } catch (err) {
             setError('Error al eliminar el unicornio');
         }
@@ -96,27 +97,6 @@ const UnicornsContainer = () => {
             power: unicorn.power
         })
     }
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     if (editingProduct) {
-    //       setProducts(products.map(product => 
-    //         product.id === editingProduct.id 
-    //           ? { ...product, ...formData, precio: Number(formData.precio), stock: Number(formData.stock) }
-    //           : product
-    //       ))
-    //       setEditingProduct(null)
-    //     } else {
-    //       const newProduct = {
-    //         id: Date.now(),
-    //         nombre: formData.nombre,
-    //         precio: Number(formData.precio),
-    //         stock: Number(formData.stock)
-    //       }
-    //       setProducts([...products, newProduct])
-    //     }
-    //     setFormData({ nombre: '', precio: '', stock: '' })
-    //   }
 
     useEffect(() => {
         fetchUnicorns();

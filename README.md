@@ -1,12 +1,39 @@
-# React + Vite
+# Gestión de Unicornios
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una aplicación web simple para gestionar un inventario de unicornios mágicos.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Crear nuevos unicornios con nombre, color, edad y poder
+- Ver lista de unicornios existentes
+- Editar información de unicornios
+- Eliminar unicornios del inventario
 
-## Expanding the ESLint configuration
+## Tecnologías Utilizadas
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React.js para la interfaz de usuario
+- PrimeReact para componentes de UI
+- React Router para navegación
+- CRUD CRUD API para el backend
+
+## Estructura del Proyecto
+
+- `src/App.jsx` - Componente principal con rutas
+- `src/unicorns/UnicornsContainer.jsx` - Lógica de negocio y manejo de estado
+- `src/unicorns/UnicornsView.jsx` - Componentes de presentación
+
+## Cómo Iniciar
+
+1. Clonar el repositorio
+2. Instalar dependencias: `npm install`
+3. Iniciar servidor de desarrollo: `npm run dev`
+4. Abrir `http://localhost:5173` en el navegador
+
+## API
+
+La aplicación utiliza CRUD CRUD como backend para almacenar los datos de los unicornios. Las operaciones disponibles son:
+
+- GET /unicorns - Obtener todos los unicornios
+- POST /unicorns - Crear nuevo unicornio
+- PUT /unicorns/:id - Actualizar unicornio existente
+- DELETE /unicorns/:id - Eliminar unicornio

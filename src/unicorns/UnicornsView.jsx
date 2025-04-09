@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 const UnicornsView = ({
     unicorns,
     formData,
-    loading,
-    error,
     onSubmit,
     onDeleteUnicorn,
     onInputChange,

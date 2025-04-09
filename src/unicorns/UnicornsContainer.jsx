@@ -50,8 +50,11 @@ const UnicornsContainer = () => {
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log('formData', formData);
         try {
             if (editingUnicorn) {
+                console.log('editingUnicorn', editingUnicorn, formData);
                 const response = await fetch(`https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns/${editingUnicorn._id}`, {
                     method: 'PUT',
                     headers: {
@@ -61,6 +64,7 @@ const UnicornsContainer = () => {
                 });
 
                 setEditingUnicorn(null)
+                fetchUnicorns();
             } else {
                 console.log('creaaa');
                 console.log(formData);
@@ -71,8 +75,17 @@ const UnicornsContainer = () => {
                     },
                     body: JSON.stringify(formData),
                 });
+
+                console.log('response', response);
                 const newUnicorn = await response.json();
                 setUnicorns([...unicorns, newUnicorn]);
+                setEditingUnicorn(null)
+                setFormData({
+                    name: '',
+                    color: '',
+                    age: 0,
+                    power: ''
+                })
             }
 
         } catch (err) {

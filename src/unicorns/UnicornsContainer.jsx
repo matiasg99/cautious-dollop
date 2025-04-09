@@ -50,10 +50,17 @@ const UnicornsContainer = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
         try {
             if (editingUnicorn) {
-                console.log('editaa');
+                const response = await fetch(`https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns/${editingUnicorn._id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                setEditingUnicorn(null)
             } else {
                 console.log('creaaa');
                 console.log(formData);

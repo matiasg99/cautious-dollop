@@ -1,16 +1,8 @@
 import { useState, useEffect } from 'react';
 import UnicornsView from './UnicornsView';
 
-// https://crudcrud.com/api/f5a9f4de2b6546b18c5415606bfc79fd
-
-// {
-//     name: "nombre unicornio",
-//     color: "color unicornio",
-//     age: 5,
-//     power: "especial"
-// }
-
 const UnicornsContainer = () => {
+    const url = 'https://crudcrud.com/api/0237ade2ebce4b669064b6fda8e400be/unicorns';
     const [unicorns, setUnicorns] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -30,12 +22,11 @@ const UnicornsContainer = () => {
         }))
     }
 
-    // Fetch unicorns
     const fetchUnicorns = async () => {
         setLoading(true);
         try {
 
-            const response = await fetch('https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns');
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Error al obtener los datos de la API');
             }
@@ -43,7 +34,7 @@ const UnicornsContainer = () => {
 
             setUnicorns(data);
         } catch (err) {
-            setError('Error al cargar los unicornios');
+            setError('Error al cargar los unicornios, error:' + err);
         } finally {
             setLoading(false);
         }
@@ -51,11 +42,9 @@ const UnicornsContainer = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('formData', formData);
         try {
             if (editingUnicorn) {
-                console.log('editingUnicorn', editingUnicorn, formData);
-                const response = await fetch(`https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns/${editingUnicorn._id}`, {
+                await fetch(url + `/${editingUnicorn._id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -66,9 +55,7 @@ const UnicornsContainer = () => {
                 setEditingUnicorn(null)
                 fetchUnicorns();
             } else {
-                console.log('creaaa');
-                console.log(formData);
-                const response = await fetch('https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns', {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -76,33 +63,33 @@ const UnicornsContainer = () => {
                     body: JSON.stringify(formData),
                 });
 
-                console.log('response', response);
                 const newUnicorn = await response.json();
                 setUnicorns([...unicorns, newUnicorn]);
                 setEditingUnicorn(null)
-                setFormData({
-                    name: '',
-                    color: '',
-                    age: 0,
-                    power: ''
-                })
             }
 
+            setFormData({
+                name: '',
+                color: '',
+                age: 0,
+                power: ''
+            })
+
         } catch (err) {
-            setError('Error al crear el unicornio');
+            setError('Error al crear el unicornio, error:' + err);
         }
     };
 
     const deleteUnicorn = async (id) => {
         try {
-            await fetch(`https://crudcrud.com/api/8ee40af459dc4006ada5654bacd38ddb/unicorns/${id}`, {
+            await fetch(url + `/${id}`, {
                 method: 'DELETE',
             });
             setUnicorns(unicorns.filter(unicorn => unicorn.id !== id));
 
             fetchUnicorns();
         } catch (err) {
-            setError('Error al eliminar el unicornio');
+            setError('Error al eliminar el unicornio, error:' + err);
         }
     };
 

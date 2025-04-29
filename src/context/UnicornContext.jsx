@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
 export const UnicornContext = createContext();
 
@@ -9,9 +10,8 @@ export const UnicornProvider = ({ children }) => {
 
     // Obtener todos los unicornios
     const getUnicorns = async () => {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        setUnicorns(data);
+        const response = await axios.get(API_URL);
+        setUnicorns(response.data);
     };
 
     useEffect(() => {
@@ -20,22 +20,13 @@ export const UnicornProvider = ({ children }) => {
 
     // Crear unicornio
     const createUnicorn = async (unicorn) => {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(unicorn),
-        });
-        const newUnicorn = await response.json();
-        setUnicorns((prev) => [...prev, newUnicorn]);
+        const response = await axios.post(API_URL, unicorn);
+        setUnicorns((prev) => [...prev, response.data]);
     };
 
     // Editar unicornio
     const editUnicorn = async (id, updatedUnicorn) => {
-        await fetch(`${API_URL}/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedUnicorn),
-        });
+        await axios.put(`${API_URL}/${id}`, updatedUnicorn);
         setUnicorns((prev) =>
             prev.map((u) => (u._id === id ? { ...u, ...updatedUnicorn } : u))
         );
@@ -43,7 +34,7 @@ export const UnicornProvider = ({ children }) => {
 
     // Eliminar unicornio
     const deleteUnicorn = async (id) => {
-        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        await axios.delete(`${API_URL}/${id}`);
         setUnicorns((prev) => prev.filter((u) => u._id !== id));
     };
 

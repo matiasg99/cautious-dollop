@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "formik": "^2.4.6",
+    "prime-react": "^1.0.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.4",
     "react": "^19.0.0",

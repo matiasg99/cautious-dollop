@@ -22,7 +22,7 @@ const ProductsView = () => {
             <button onClick={() => navigate('/productos/new')} style={{ marginBottom: 16 }}>
                 Agregar Producto
             </button>
-            <table>
+            <table className="products-table-custom spaced-table" style={{ borderRadius: 12, border: '2px solid #b3c6ff', boxShadow: '0 2px 12px #e3eaff', marginTop: 16 }}>
                 <thead>
                     <tr>
                         <th>Nombre</th>

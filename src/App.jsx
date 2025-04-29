@@ -1,16 +1,24 @@
-import './App.css'
-import UnicornsContainer from './unicorns/UnicornsContainer'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Unicorns from './unicorns';
+import Products from './products';
+import { UnicornProvider } from './context/UnicornContext';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/unicornios" element={<UnicornsContainer />} />
-        <Route path="/" element={<Navigate to="/unicornios" replace />} />
+        <Route
+          path="/unicornios/*"
+          element={
+            <UnicornProvider>
+              <Unicorns />
+            </UnicornProvider>
+          }
+        />
+        <Route path="/productos/*" element={<Products />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

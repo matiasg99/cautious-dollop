@@ -1,39 +1,49 @@
-# Gestión de Unicornios
+# Gestión de Unicornios y Productos
 
-Una aplicación web simple para gestionar un inventario de unicornios mágicos.
+Una aplicación web simple para gestionar un inventario de unicornios mágicos y productos relacionados.
 
-## Funcionalidades
+## Instalación
 
-- Crear nuevos unicornios con nombre, color, edad y poder
-- Ver lista de unicornios existentes
-- Editar información de unicornios
-- Eliminar unicornios del inventario
+1. Clona el repositorio
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Inicia el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+4. Abre `http://localhost:5173` en tu navegador
+
+## ¿Cómo se usa?
+
+- Navega a `/unicornios` para gestionar unicornios:
+  - Ver listado de unicornios
+  - Crear, editar y eliminar unicornios
+- Navega a `/productos` para gestionar productos:
+  - Ver listado de productos
+  - Agregar nuevos productos
+
+## Vistas principales
+
+- `/unicornios` → Listado de unicornios (con opción de crear, editar y eliminar)
+- `/unicornios/crear` → Formulario para crear un unicornio
+- `/unicornios/editar/:id` → Formulario para editar un unicornio existente
+- `/productos` → Listado de productos (nombre y color)
+- `/productos/new` → Formulario para agregar un producto
 
 ## Tecnologías Utilizadas
 
 - React.js para la interfaz de usuario
-- PrimeReact para componentes de UI
+- PrimeReact para componentes de UI (solo unicornios)
 - React Router para navegación
-- CRUD CRUD API para el backend
+- CRUD CRUD API para unicornios
+- LocalStorage para productos
 
 ## Estructura del Proyecto
 
-- `src/App.jsx` - Componente principal con rutas
-- `src/unicorns/UnicornsContainer.jsx` - Lógica de negocio y manejo de estado
-- `src/unicorns/UnicornsView.jsx` - Componentes de presentación
+- `src/App.jsx` - Componente principal y ruteo global
+- `src/unicorns/` - Módulo de unicornios (vistas, formulario, contexto)
+- `src/products/` - Módulo de productos (vistas, formulario, datos locales)
+- `src/context/UnicornContext.jsx` - Contexto global para unicornios
 
-## Cómo Iniciar
-
-1. Clonar el repositorio
-2. Instalar dependencias: `npm install`
-3. Iniciar servidor de desarrollo: `npm run dev`
-4. Abrir `http://localhost:5173` en el navegador
-
-## API
-
-La aplicación utiliza CRUD CRUD como backend para almacenar los datos de los unicornios. Las operaciones disponibles son:
-
-- GET /unicorns - Obtener todos los unicornios
-- POST /unicorns - Crear nuevo unicornio
-- PUT /unicorns/:id - Actualizar unicornio existente
-- DELETE /unicorns/:id - Eliminar unicornio

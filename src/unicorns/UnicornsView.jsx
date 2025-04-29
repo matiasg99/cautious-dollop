@@ -22,12 +22,20 @@ const UnicornsView = () => {
                     <Column
                         header="Acciones"
                         body={(rowData) => (
-                            <button
-                                onClick={() => deleteUnicorn(rowData._id)}
-                                className="p-button-danger"
-                            >
-                                Eliminar
-                            </button>
+                            <div style={{ display: 'flex', gap: '8px' }}>
+                                <button
+                                    onClick={() => navigate(`/unicornios/editar/${rowData._id}`)}
+                                    className="p-button"
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    onClick={() => deleteUnicorn(rowData._id)}
+                                    className="p-button-danger"
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
                         )}
                     />
                 </DataTable>
